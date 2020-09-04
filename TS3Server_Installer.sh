@@ -45,42 +45,44 @@ function makeDir() {
   fi
 }
 
-# clear
-# greenMessage "[..........................] (0%)"
-# apt-get install sudo -y >/dev/null
-# clear
-# greenMessage "[#.........................] (10%)"
-# sudo apt-get install curl -y >/dev/null
-# clear
-# greenMessage "[##........................] (15%)" 
-# sudo apt-get install wget -y >/dev/null
-# clear
-# greenMessage "[###.......................] (27%)"
-# sudo apt-get install nano -y >/dev/null
-# clear
-# greenMessage "[#####.....................] (36%)"
-# sudo apt-get install screen -y >/dev/null
-# clear
-# greenMessage "[######....................] (45%)"
-# sudo apt-get install htop -y >/dev/null
-# clear
-# greenMessage "[#############.............] (59%)"
-# sudo apt-get install git -y >/dev/null
-# clear
-# greenMessage "[#################.........] (68%)"
-# sudo apt-get install tar -y >/dev/null
-# clear
-# greenMessage "[####################......] (76%)"
-# sudo apt-get install bzip -y >/dev/null
-# clear
-# greenMessage "[#######################...] (86%)" 
-# sudo apt-get install unzip -y >/dev/null
-# clear
-# greenMessage "[#########################.] (96%)" 
-# sudo apt-get update -y >/dev/null
-# clear
-# whiteMessage "[##########################] (100%)"
-# sudo apt-get upgrade -y >/dev/null
+# INSTALLER
+
+clear
+greenMessage "[..........................] (0%)"
+apt-get install sudo -y >/dev/null
+clear
+greenMessage "[#.........................] (10%)"
+sudo apt-get install curl -y >/dev/null
+clear
+greenMessage "[##........................] (15%)" 
+sudo apt-get install wget -y >/dev/null
+clear
+greenMessage "[###.......................] (27%)"
+sudo apt-get install nano -y >/dev/null
+clear
+greenMessage "[#####.....................] (36%)"
+sudo apt-get install screen -y >/dev/null
+clear
+greenMessage "[######....................] (45%)"
+sudo apt-get install htop -y >/dev/null
+clear
+greenMessage "[#############.............] (59%)"
+sudo apt-get install git -y >/dev/null
+clear
+greenMessage "[#################.........] (68%)"
+sudo apt-get install tar -y >/dev/null
+clear
+greenMessage "[####################......] (76%)"
+sudo apt-get install bzip -y >/dev/null
+clear
+greenMessage "[#######################...] (86%)" 
+sudo apt-get install unzip -y >/dev/null
+clear
+greenMessage "[#########################.] (96%)" 
+sudo apt-get update -y >/dev/null
+clear
+whiteMessage "[##########################] (100%)"
+sudo apt-get upgrade -y >/dev/null
 clear
 
 # Check if the script was run as root user. Otherwise exit the script
