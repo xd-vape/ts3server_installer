@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teamspeak³ Installer - Linux</title>
+    <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="main.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -34,13 +34,15 @@
     <div class="container">
         <div class="card">
             <div class="card-body">
+                <h4>Installation</h1>
+                <div>
+                    <input id="copy-input" type="text" class="form-control" value="bash <(wget -O - 'https://raw.githubusercontent.com/xd-vape/ts3server_installer/master/teamspeak_installerV2.sh')" readonly>
+                    <img src="copy.png" class="copy" onclick="copyText();">
+                </div>
+                <p>Einfach diese Zeile kopieren und in deine Konsole Einfügen dann nur noch Enter drücken und das Skript startet dann.</p>
                 <div class="alert alert-success" role="alert">
                     Erfolgreich kopiert!
                 </div>
-                <h4>Installation</h1>
-                <input id="copy-input" type="text" class="form-control" value="bash <(wget -O - 'https://raw.githubusercontent.com/xd-vape/ts3server_installer/master/TS3Server_Installer.sh')" readonly>
-                <img src="copy.png" class="copy" onclick="copyText();">
-                <p>Einfach diese Zeile kopieren und in deine Konsole Einfügen dann nur noch Enter drücken und das Skript startet dann.</p>
             </div>
         </div>
     </div>
