@@ -3,6 +3,9 @@
 
 MACHINE=$(uname -m)
 Instversion="1.0"
+VERSION=3.12.1
+SERVERUSER=ts3server_amd64
+LOCATION=/home/$SERVERUSER/
 
 # Functions
 
@@ -85,11 +88,6 @@ whiteMessage "[##########################] (100%)"
 sudo apt-get upgrade -y >/dev/null
 clear
 
-# Check if the script was run as root user. Otherwise exit the script
-if [ "$(id -u)" != "0" ]; then
-    errorExit "Wechsel zum Root-Konto erforderlich!"
-fi
-
 if [ "$MACHINE" == "x86_64" ]; then
   ARCH="amd64"
 else
@@ -126,16 +124,18 @@ if [ "$opt" = "1" ]; then
   echo "│                                              │"
   echo "└──────────────────────────────────────────────┘"
   echo "Server automatisch installieren oder selber entscheiden?" 
+  redMessage "Wenn du in deinen Eignen Ordner installieren willst, dann erstell dir bitte einen neuen User!" 
   select installdir in "Automatisch" "Eigener Ordner" "Quit"
   do
   if [ "$installdir" == "Automatisch" ]
-  VERSION=3.12.1
-  SUUSER=ts3server_amd64
-  LOCATION=/home/$SUUSER/
   then
-  clear
+  # Check if the script was run as root user. Otherwise exit the script
+  if [ "$(id -u)" != "0" ]; then
+      errorExit "Wechsel zum Root-Konto erforderlich!"
+  fi
+    clear
     yellowMessage "Teamspeak Server wird heruntergeladen..."
-    adduser $SUUSER --disabled-password -q
+    adduser -q --disabled-password --gecos "" $SERVERUSER
     cd $LOCATION || return
     DOWNLOAD_URL_VERSION="https://files.teamspeak-services.com/releases/server/$VERSION/teamspeak3-server_linux_$ARCH-$VERSION.tar.bz2"
     STATUS=$(wget --server-response -L $DOWNLOAD_URL_VERSION 2>&1 | awk '/^  HTTP/{print $2}')
@@ -148,7 +148,7 @@ if [ "$opt" = "1" ]; then
     mv * ../ 
     cd ..
     rmdir teamspeak3-server_linux_$ARCH/
-    sudo chown -R $SUUSER $LOCATION
+    sudo chown -R $SERVERUSER $LOCATION
     greenMessage "Teamspeak Server erfolgreich installiert!"
       echo "Soll der Server gestartet werden?" 
       select start_server in "Ja" "Nein"
@@ -158,8 +158,9 @@ if [ "$opt" = "1" ]; then
         clear
         cd || return
         echo "echo Hello World" >> $LOCATION/.ts3server_license_accepted
-        runuser -l $SUUSER -c './ts3server_startscript.sh start'
-        yellowMessage "!!!!!BITTE SPEICHER DIR OBEN ALLES AB!!!!!"
+        clear
+        runuser -l $SERVERUSER -c './ts3server_startscript.sh start'
+        yellowMessage "!!!!!BITTE SPEICHER DIR ALLES AB!!!!!"
         exit 0
       fi
       if [ "$start_server" == "Nein" ]
@@ -172,9 +173,42 @@ if [ "$opt" = "1" ]; then
 
     if [ "$installdir" == "Eigener Ordner" ]
     then
-        read -p "Wo soll der Server installiert werden? :" installowndir
-        mkdir $installowndir
-        cd $installowndir
+      read -p "Wo soll der Server installiert werden? :" installowndir
+      mkdir $installowndir
+      cd $installowndir
+      DOWNLOAD_URL_VERSION="https://files.teamspeak-services.com/releases/server/$VERSION/teamspeak3-server_linux_$ARCH-$VERSION.tar.bz2"
+      STATUS=$(wget --server-response -L $DOWNLOAD_URL_VERSION 2>&1 | awk '/^  HTTP/{print $2}')
+      if [ "$STATUS" == "200" ]; then
+          DOWNLOAD_URL=$DOWNLOAD_URL_VERSION
+      fi
+      tar -xvf teamspeak3-server_linux_$ARCH-$VERSION.tar.bz2 >/dev/null
+      rm teamspeak3-server_linux_$ARCH-$VERSION.tar.bz2
+      cd teamspeak3-server_linux_$ARCH || return
+      mv * ../ 
+      cd ..
+      rmdir teamspeak3-server_linux_$ARCH/
+
+      greenMessage "Teamspeak Server erfolgreich installiert!"
+      echo "Soll der Server gestartet werden?" 
+      select start_server in "Ja" "Nein"
+      do
+      if [ "$start_server" == "Ja" ]
+      then
+        clear
+        cd || return
+        echo "echo Hello World" >> $installowndir/.ts3server_license_accepted
+        clear
+        cd $installowndir 
+        ./ts3server_startscript.sh start
+        yellowMessage "!!!!!BITTE SPEICHER DIR ALLES AB!!!!!"
+        exit 0
+      fi
+      if [ "$start_server" == "Nein" ]
+      then
+        errorExit 'Installer wird verlassen!'
+        exit 0
+      fi
+      done
     fi
 
     if [ "$installdir" == "Quit" ]
