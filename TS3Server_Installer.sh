@@ -104,9 +104,10 @@ echo "│                                              │"
 echo "├──────────────────────────────────────────────┤"
 echo "│                                              │"
 echo "│  1. TS3 Server Installieren                  │"
-echo "│  2. TS3 Server Entfernen                     │"
-echo "│  3. TS3 Server Starten                       │"
-echo "│  4. Installer Quit                           │"
+echo "│  2. TS3 Server Update                        │"
+echo "│  3. TS3 Server Entfernen                     │"
+echo "│  4. TS3 Server Starten/Stoppen/Neustarten    │"
+echo "│  5. Verlasse Installer                       │"
 echo "│                                              │"
 echo "└──────────────────────────────────────────────┘"
 read -p "Wähle eine Option aus: " opt
@@ -127,9 +128,10 @@ if [ "$opt" = "1" ]; then
   redMessage "Wenn du in deinen Eignen Ordner installieren willst, dann erstell dir bitte einen neuen User!" 
   select installdir in "Automatisch" "Eigener Ordner" "Quit"
   do
+
+  # AUTOMATISCH
   if [ "$installdir" == "Automatisch" ]
   then
-  # Check if the script was run as root user. Otherwise exit the script
   if [ "$(id -u)" != "0" ]; then
       errorExit "Wechsel zum Root-Konto erforderlich!"
   fi
@@ -171,6 +173,7 @@ if [ "$opt" = "1" ]; then
       done
     fi
 
+    # EIGNER ORDNER
     if [ "$installdir" == "Eigener Ordner" ]
     then
       read -p "Wo soll der Server installiert werden? :" installowndir
@@ -187,7 +190,6 @@ if [ "$opt" = "1" ]; then
       mv * ../ 
       cd ..
       rmdir teamspeak3-server_linux_$ARCH/
-
       greenMessage "Teamspeak Server erfolgreich installiert!"
       echo "Soll der Server gestartet werden?" 
       select start_server in "Ja" "Nein"
@@ -220,14 +222,51 @@ if [ "$opt" = "1" ]; then
 fi
 
 if [ "$opt" = "2" ]; then
-    echo "Test"
+
+NVERSION=3.12.1
+
+  clear
+  echo "Wurde der Server Automatisch installiert oder in einem Eignen Ordner?" 
+  select server_update in "Automatisch" "Eignen Ordner"
+      do
+      if [ "$server_update" == "Automatisch" ]
+      then
+        cd $LOCATION
+        redMessage "Teamspeak Server wird gestoppt..."
+        runuser -l $SERVERUSER -c './ts3server_startscript.sh stop'
+        cp -R home/ts3server_amd64/teamspeak3-server_linux_$ARCH /home/ts3server_amd64/teamspeak3-server_linux_$ARCH-backup
+        DOWNLOAD_URL_VERSION="https://files.teamspeak-services.com/releases/server/$NVERSION/teamspeak3-server_linux_$ARCH-$VERSION.tar.bz2"
+        STATUS=$(wget --server-response -L $DOWNLOAD_URL_VERSION 2>&1 | awk '/^  HTTP/{print $2}')
+        if [ "$STATUS" == "200" ]; then
+            DOWNLOAD_URL=$DOWNLOAD_URL_VERSION
+        fi
+        clear
+        greenMessage "Teamspeak Server wird entpackt..."
+        tar xvfj teamspeak3-server_linux_$ARCH-$VERSION.tar.bz2 >/dev/null
+        clear
+        echo "Teamspeak Server wurde erfolgreich entpackt!"
+        echo "Teamspeak Server wird wieder gestartet!"
+        cd $LOCATION
+        runuser -l $SERVERUSER -c './ts3server_startscript.sh start'
+        exit 0
+      fi
+      if [ "$server_update" == "Eignen Ordner" ]
+      then
+        errorExit 'Installer wird verlassen!'
+        exit 0
+      fi
+      done
 fi
 
 if [ "$opt" = "3" ]; then
- echo "Test3"
+    echo "Test"
 fi
 
 if [ "$opt" = "4" ]; then
+ echo "Test3"
+fi
+
+if [ "$opt" = "5" ]; then
  echo "Ciao"
  exit 0
 fi
