@@ -16,7 +16,7 @@
 ## Installation
 
 ```bash
-bash <(wget -O - 'https://raw.githubusercontent.com/xd-vape/ts3server_installer/master/teamspeak_installerV2.sh')
+bash <(wget -O - 'https://raw.githubusercontent.com/xd-vape/ts3server_installer/master/TS3Server_Installer.sh')
 ```
 
 Dieser Befehl lädt grundsätzlich die neueste Version des Installationsskripts herunter und führt sie über die Bash aus.
