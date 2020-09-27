@@ -1,2 +1,93 @@
-<h1>Hewllo World</h1>
-<h1>Hewllo World2</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>a simple teamspeak³ server installer for linux</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="main.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Teamspeak³ Server Installer</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#home">Home</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+            </ul> -->
+        </div>
+    </nav>
+    
+<section id="home">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h4>Installation</h1>
+                <div>
+                    <input id="copy-input" type="text" class="form-control" value="bash <(wget -O - 'https://raw.githubusercontent.com/xd-vape/ts3server_installer/master/TS3Server_Installer.sh')" readonly>
+                    <img src="copy.png" class="copy" onclick="copyText();">
+                </div>
+                <p>Einfach diese Zeile kopieren und in deine Konsole Einfügen dann nur noch Enter drücken und das Skript startet dann.</p>
+                <div class="alert alert-success" role="alert">
+                    Erfolgreich kopiert!
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h4>Requirements</h1>
+                <p>Der Server sollte mindestens 128MB freien RAM haben. <br>
+                    Sie sollten auch sicherstellen, dass der Server über genügend freien Speicherplatz verfügt, um Ihren Anforderungen zu entsprechen.                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h4>Changelog</h1>
+                <div class="box">
+                    <ul>
+                        <span>22.09.2020</span>
+                        <li><strong>- Update Funktion hinzugefügt!</strong></li>
+                        <span>04.09.2020</span>
+                        <li><strong>- V1.0 Release!</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script type="text/javascript">
+    var alert = document.querySelector('.alert')
+
+    function copyText() {
+        var copyInstallText = document.getElementById("copy-input");
+        copyInstallText.select();
+        copyInstallText.setSelectionRange(0, 9999);
+        document.execCommand("copy");
+        alert.classList.toggle('active');
+        setTimeout(function() {
+            alert.classList.toggle('active');
+        },2000)
+    }
+</script>
+</body>
+</html>
