@@ -3,7 +3,7 @@
 
 MACHINE=$(uname -m)
 Instversion="1.0"
-VERSION=3.12.1
+VERSION=3.13.2
 SERVERUSER=ts3server_amd64
 LOCATION=/home/$SERVERUSER/
 
