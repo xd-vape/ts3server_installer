@@ -1,9 +1,9 @@
 #!/bin/bash
-# Teamspeak³ Server installer by xd vape
+# Teamspeak³ Server installer by xd vape and updated by Joshua24h
 
 MACHINE=$(uname -m)
 Instversion="1.0"
-VERSION=3.13.2
+VERSION=3.13.3
 SERVERUSER=ts3server_amd64
 LOCATION=/home/$SERVERUSER/
 
