@@ -223,7 +223,7 @@ fi
 
 if [ "$opt" = "2" ]; then
 
-NVERSION=3.12.1
+NVERSION=3.13.3
 
   clear
   echo "Wurde der Server Automatisch installiert oder in einem Eignen Ordner?" 
